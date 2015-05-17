@@ -14,6 +14,8 @@ JWT Scala is divided in several sub-projects each targeting a specific use-case.
 |`jwt-json4s-native`|`json4s` Native implementation|[JwtJson4s](https://pauldijou.github.io/jwt-scala/samples/jwt-json4s)|[API](https://pauldijou.github.io/jwt-scala/api/latest/jwt-json4s)|
 |`jwt-json4s-jackson`|`json4s` Jackson implementation|[JwtJson4s](https://pauldijou.github.io/jwt-scala/samples/jwt-json4s)|[API](https://pauldijou.github.io/jwt-scala/api/latest/jwt-json4s)|
 
+If you need a previous version of the Scaladoc API, check [the bottom of this page](https://pauldijou.github.io/jwt-scala/api/#old-apis)
+
 ## Install
 
 In the following snippet, replace `[name]` with the actual name of the project you need. **Using Java 1.6 or 1.7?** Add `-legacy` after the name of the project. See [below](#which-java) why.
@@ -66,7 +68,7 @@ If the algorithm is tagged as `Exp.` (experimental), it means it might work, but
 |ES384|ECDSASHA384|ECDSA using SHA-384 algorithm|✔|
 |ES512|ECDSASHA512|ECDSA using SHA-512 algorithm|✔|
 
-## Which Java?
+## <a name="which-java"></a>Which Java?
 
 Actually, all sub-projects have two flavours. One target Java 1.8+, using the new Time API and the new Base64 util. This is the default one. If you are using Java 1.6 or 1.7 (which have both reach end-of-life by the way), you will have to use the "legacy" version of the lib. It's exactly the same (in fact, 99% of the code source is shared) except it's using the old Calendar API and the Base64 util from Apache Commons Codec (introducing **one small dependency** in this particular use-case).
 
