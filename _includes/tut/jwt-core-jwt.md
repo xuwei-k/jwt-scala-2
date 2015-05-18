@@ -26,7 +26,7 @@ res3: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzM4NCJ9.eyJ1c2VyIjoxfQ.Do0PQWccbp1J7
 scala> // Encode from case class, header automatically generated
      | // Set that the token has been issued now and expires in 10 seconds
      | Jwt.encode(JwtClaim({"""{"user":1}"""}).issuedNow.expiresIn(10), "secretKey", JwtAlgorithm.HS512)
-res6: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE0MzE4NjI1NDksImlhdCI6MTQzMTg2MjUzOSwidXNlciI6MX0.Sq6ZWzo8GY28f6NKJA3Sj4AxWHmWTFTwVbb1c28kuxsNOZgdsWfvy71JCWnIGDbkuvpFtEMDXxZU_c3m7lTA5w
+res6: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE0MzE5NjA3NDIsImlhdCI6MTQzMTk2MDczMiwidXNlciI6MX0.3ghWlAig1JWtSdr7EL7sajyq73dhy8kwpev0tJO1HAMaOJkli1zdq_iPuh75DSD_TIKQDG-Oxk-z5IMBCBqqfg
 
 scala> // You can encode without signing it
      | Jwt.encode("""{"user":1}""")
@@ -81,7 +81,7 @@ res31: scala.util.Try[String] = Failure(pdi.jwt.JwtValidationException: The sign
 
 scala> // Failure if the token only starts in 5 seconds
      | Jwt.decode(Jwt.encode(JwtClaim().startsIn(5)))
-res33: scala.util.Try[String] = Failure(pdi.jwt.JwtNotBeforeException: The token will only be valid after 2015-05-17T11:35:44Z)
+res33: scala.util.Try[String] = Failure(pdi.jwt.JwtNotBeforeException: The token will only be valid after 2015-05-18T14:52:18Z)
 ```
 
 ### Validating
@@ -100,9 +100,9 @@ scala> // Wrong key here
 pdi.jwt.JwtValidationException: The signature is invalid for this token.
   at pdi.jwt.JwtCore$class.validate(Jwt.scala:248)
   at pdi.jwt.Jwt$.validate(Jwt.scala:18)
-  at pdi.jwt.JwtCore$class.validate(Jwt.scala:276)
+  at pdi.jwt.JwtCore$class.validate(Jwt.scala:277)
   at pdi.jwt.Jwt$.validate(Jwt.scala:18)
-  at pdi.jwt.JwtCore$class.validate(Jwt.scala:284)
+  at pdi.jwt.JwtCore$class.validate(Jwt.scala:290)
   at pdi.jwt.Jwt$.validate(Jwt.scala:18)
   ... 424 elided
 
@@ -120,7 +120,7 @@ scala> // No key while the token is actually signed => wrong
 pdi.jwt.JwtValidationException: The signature is invalid for this token.
   at pdi.jwt.JwtCore$class.validate(Jwt.scala:248)
   at pdi.jwt.Jwt$.validate(Jwt.scala:18)
-  at pdi.jwt.JwtCore$class.validate(Jwt.scala:276)
+  at pdi.jwt.JwtCore$class.validate(Jwt.scala:277)
   at pdi.jwt.Jwt$.validate(Jwt.scala:18)
   ... 456 elided
 
@@ -129,12 +129,12 @@ res45: Boolean = false
 
 scala> // The token hasn't started yet!
      | Jwt.validate(Jwt.encode(JwtClaim().startsIn(5)))
-pdi.jwt.JwtNotBeforeException: The token will only be valid after 2015-05-17T11:35:45Z
+pdi.jwt.JwtNotBeforeException: The token will only be valid after 2015-05-18T14:52:19Z
   at pdi.jwt.JwtTime$.validateNowIsBetween(JwtTime.scala:46)
   at pdi.jwt.JwtTime$.validateNowIsBetweenSeconds(JwtTime.scala:62)
   at pdi.jwt.JwtCore$class.validate(Jwt.scala:262)
   at pdi.jwt.Jwt$.validate(Jwt.scala:18)
-  at pdi.jwt.JwtCore$class.validate(Jwt.scala:276)
+  at pdi.jwt.JwtCore$class.validate(Jwt.scala:277)
   at pdi.jwt.Jwt$.validate(Jwt.scala:18)
   ... 472 elided
 
@@ -151,7 +151,7 @@ java.lang.IllegalArgumentException: Input byte[] should at least have 2 bytes fo
   at pdi.jwt.JwtBase64$.decodeString(JwtBase64.scala:11)
   at pdi.jwt.JwtBase64$.decodeString(JwtBase64.scala:14)
   at pdi.jwt.JwtCore$class.pdi$jwt$JwtCore$$splitToken(Jwt.scala:171)
-  at pdi.jwt.JwtCore$class.validate(Jwt.scala:275)
+  at pdi.jwt.JwtCore$class.validate(Jwt.scala:276)
   at pdi.jwt.Jwt$.validate(Jwt.scala:18)
   ... 488 elided
 

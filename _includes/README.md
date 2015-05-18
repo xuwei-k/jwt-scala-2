@@ -1,4 +1,4 @@
-# JWT Scala 0.0.6
+# JWT Scala 0.1.0
 
 Scala support for JSON Web Token ([JWT](http://tools.ietf.org/html/draft-ietf-oauth-json-web-token)). Supports Java 1.6+, Scala 2.10.x and Scala 2.11.x. Optional helpers for Play Framework, Play JSON, Json4s Native and Json4s Jackson.
 
@@ -16,6 +16,8 @@ JWT Scala is divided in several sub-projects each targeting a specific use-case.
 
 If you need a previous version of the Scaladoc API, check [the bottom of this page](https://pauldijou.github.io/jwt-scala/api/#old-apis)
 
+You can also check a [standalone Play application](https://github.com/pauldijou/jwt-scala/tree/master/examples/play-angular-standalone) using `jwt-play` and implementating a small REST API with authentication and admin role (include a UI too!).
+
 ## Install
 
 In the following snippet, replace `[name]` with the actual name of the project you need. **Using Java 1.6 or 1.7?** Add `-legacy` after the name of the project. See [below](#which-java) why.
@@ -26,7 +28,7 @@ In the following snippet, replace `[name]` with the actual name of the project y
 resolvers += Resolver.jcenterRepo
 
 libraryDependencies ++= Seq(
-  "pdi" %% "[name]" % "0.0.6"
+  "pdi" %% "[name]" % "0.1.0"
 )
 ```
 
@@ -38,7 +40,7 @@ libraryDependencies ++= Seq(
 resolvers += Resolver.jcenterRepo
 
 libraryDependencies ++= Seq(
-  "pdi" %% "jwt-play-legacy" % "0.0.6"
+  "pdi" %% "jwt-play-legacy" % "0.1.0"
 )
 ```
 
