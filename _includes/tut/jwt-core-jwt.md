@@ -9,28 +9,28 @@ import pdi.jwt.{Jwt, JwtAlgorithm, JwtHeader, JwtClaim}
 scala> val token = Jwt.encode("""{"user":1}""", "secretKey", JwtAlgorithm.HS256)
 token: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxfQ.oG3iKnAvj_OKCv0tchT90sv2IFVeaREgvJmwgRcXfkI
 
-scala> Jwt.decodeRawAll(token, Option("secretKey"))
-res0: scala.util.Try[(String, String, Option[String])] = Success(({"typ":"JWT","alg":"HS256"},{"user":1},Some(oG3iKnAvj_OKCv0tchT90sv2IFVeaREgvJmwgRcXfkI)))
+scala> Jwt.decodeRawAll(token, "secretKey")
+res0: scala.util.Try[(String, String, String)] = Success(({"typ":"JWT","alg":"HS256"},{"user":1},oG3iKnAvj_OKCv0tchT90sv2IFVeaREgvJmwgRcXfkI))
 
-scala> Jwt.decodeRawAll(token, Option("wrongKey"))
-res1: scala.util.Try[(String, String, Option[String])] = Failure(pdi.jwt.JwtValidationException: The signature is invalid for this token.)
+scala> Jwt.decodeRawAll(token, "wrongKey")
+res1: scala.util.Try[(String, String, String)] = Failure(pdi.jwt.JwtValidationException: Invalid signature for this token.)
 ```
 
 ### Encoding
 
 ```scala
 scala> // Encode from string, header automatically generated
-     | Jwt.encode("""{"user":1}""","secretKey", JwtAlgorithm.HS384)
+     | Jwt.encode("""{"user":1}""", "secretKey", JwtAlgorithm.HS384)
 res3: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzM4NCJ9.eyJ1c2VyIjoxfQ.Do0PQWccbp1J7ZWcFL-_IY9OFaI-7t75k7-NxZ52jk2kAb0sFopJEeZapkiXthEp
 
 scala> // Encode from case class, header automatically generated
      | // Set that the token has been issued now and expires in 10 seconds
      | Jwt.encode(JwtClaim({"""{"user":1}"""}).issuedNow.expiresIn(10), "secretKey", JwtAlgorithm.HS512)
-res6: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE0MzE5NjEzMTQsImlhdCI6MTQzMTk2MTMwNCwidXNlciI6MX0.VSMXUGx7xngRx_urbRAybslPtm8ZKbOCZwg7CeG4AQGNfamy_5qbccXyr9u9Jb97K3Sb6ajGl1skgktMN7CliA
+res6: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE0MzMyNTU1NDUsImlhdCI6MTQzMzI1NTUzNSwidXNlciI6MX0.qUjVDf3kKUxgN5HtNdptYKkC3_364AnaJpmepsjwIzaxfLeRCR3-NnMn5xZ0OeYMFbtd0np42lnwdnU0jgtXNA
 
 scala> // You can encode without signing it
      | Jwt.encode("""{"user":1}""")
-res8: String = e30.eyJ1c2VyIjoxfQ.
+res8: String = eyJhbGciOiJub25lIn0.eyJ1c2VyIjoxfQ.
 
 scala> // You can specify a string header but also need to specify the algorithm just to be sure
      | // This is not really typesafe, so please use it with care
@@ -49,22 +49,22 @@ In JWT Scala, espcially when using raw strings which are not typesafe at all, th
 
 ```scala
 scala> // Decode all parts of the token as string
-     | Jwt.decodeRawAll(token, Option("secretKey"))
-res16: scala.util.Try[(String, String, Option[String])] = Success(({"typ":"JWT","alg":"HS256"},{"user":1},Some(oG3iKnAvj_OKCv0tchT90sv2IFVeaREgvJmwgRcXfkI)))
+     | Jwt.decodeRawAll(token, "secretKey")
+res16: scala.util.Try[(String, String, String)] = Success(({"typ":"JWT","alg":"HS256"},{"user":1},oG3iKnAvj_OKCv0tchT90sv2IFVeaREgvJmwgRcXfkI))
 
 scala> // Decode only the claim as a string
-     | Jwt.decodeRaw(token, Option("secretKey"))
+     | Jwt.decodeRaw(token, "secretKey")
 res18: scala.util.Try[String] = Success({"user":1})
 
 scala> // Decode all parts and cast them as a better type if possible.
      | // Since the implementation in JWT Core only use string, it is the same as decodeRawAll
      | // But check the result in JWT Play JSON to see the difference
-     | Jwt.decodeAll(token, Option("secretKey"))
-res22: scala.util.Try[(String, String, Option[String])] = Success(({"typ":"JWT","alg":"HS256"},{"user":1},Some(oG3iKnAvj_OKCv0tchT90sv2IFVeaREgvJmwgRcXfkI)))
+     | Jwt.decodeAll(token, "secretKey")
+res22: scala.util.Try[(String, String, String)] = Success(({"typ":"JWT","alg":"HS256"},{"user":1},oG3iKnAvj_OKCv0tchT90sv2IFVeaREgvJmwgRcXfkI))
 
 scala> // Same as before, but only the claim
      | // (you should start to see a pattern in the naming convention of the functions)
-     | Jwt.decode(token, Option("secretKey"))
+     | Jwt.decode(token, "secretKey")
 res25: scala.util.Try[String] = Success({"user":1})
 
 scala> // Failure because the token is not a token at all
@@ -76,12 +76,12 @@ scala> // Failure if not Base64 encoded
 res29: scala.util.Try[String] = Failure(java.lang.IllegalArgumentException: Input byte[] should at least have 2 bytes for base64 bytes)
 
 scala> // Failure in case we use the wrong key
-     | Jwt.decode(token, Option("wrongKey"))
-res31: scala.util.Try[String] = Failure(pdi.jwt.JwtValidationException: The signature is invalid for this token.)
+     | Jwt.decode(token, "wrongKey")
+res31: scala.util.Try[String] = Failure(pdi.jwt.JwtValidationException: Invalid signature for this token.)
 
 scala> // Failure if the token only starts in 5 seconds
      | Jwt.decode(Jwt.encode(JwtClaim().startsIn(5)))
-res33: scala.util.Try[String] = Failure(pdi.jwt.JwtNotBeforeException: The token will only be valid after 2015-05-18T15:01:50Z)
+res33: scala.util.Try[String] = Failure(pdi.jwt.JwtNotBeforeException: The token will only be valid after 2015-06-02T14:32:20Z)
 ```
 
 ### Validating
@@ -97,14 +97,14 @@ res36: Boolean = true
 
 scala> // Wrong key here
      | Jwt.validate(token, "wrongKey")
-pdi.jwt.JwtValidationException: The signature is invalid for this token.
-  at pdi.jwt.JwtCore$class.validate(Jwt.scala:248)
-  at pdi.jwt.Jwt$.validate(Jwt.scala:18)
-  at pdi.jwt.JwtCore$class.validate(Jwt.scala:277)
-  at pdi.jwt.Jwt$.validate(Jwt.scala:18)
-  at pdi.jwt.JwtCore$class.validate(Jwt.scala:290)
-  at pdi.jwt.Jwt$.validate(Jwt.scala:18)
-  ... 424 elided
+pdi.jwt.JwtValidationException: Invalid signature for this token.
+  at pdi.jwt.JwtCore$class.validate(Jwt.scala:320)
+  at pdi.jwt.Jwt$.validate(Jwt.scala:20)
+  at pdi.jwt.JwtCore$class.validate(Jwt.scala:328)
+  at pdi.jwt.Jwt$.validate(Jwt.scala:20)
+  at pdi.jwt.JwtCore$class.validate(Jwt.scala:376)
+  at pdi.jwt.Jwt$.validate(Jwt.scala:20)
+  ... 428 elided
 
 scala> Jwt.isValid(token, "wrongKey")
 res39: Boolean = false
@@ -117,26 +117,28 @@ res42: Boolean = true
 
 scala> // No key while the token is actually signed => wrong
      | Jwt.validate(token)
-pdi.jwt.JwtValidationException: The signature is invalid for this token.
-  at pdi.jwt.JwtCore$class.validate(Jwt.scala:248)
-  at pdi.jwt.Jwt$.validate(Jwt.scala:18)
-  at pdi.jwt.JwtCore$class.validate(Jwt.scala:277)
-  at pdi.jwt.Jwt$.validate(Jwt.scala:18)
-  ... 456 elided
+pdi.jwt.JwtNonEmptySignatureException: Non-empty signature found inside the token while trying to verify without a key.
+  at pdi.jwt.JwtCore$class.validate(Jwt.scala:296)
+  at pdi.jwt.Jwt$.validate(Jwt.scala:20)
+  at pdi.jwt.JwtCore$class.validate(Jwt.scala:361)
+  at pdi.jwt.Jwt$.validate(Jwt.scala:20)
+  ... 460 elided
 
 scala> Jwt.isValid(token)
 res45: Boolean = false
 
 scala> // The token hasn't started yet!
      | Jwt.validate(Jwt.encode(JwtClaim().startsIn(5)))
-pdi.jwt.JwtNotBeforeException: The token will only be valid after 2015-05-18T15:01:51Z
+pdi.jwt.JwtNotBeforeException: The token will only be valid after 2015-06-02T14:32:21Z
   at pdi.jwt.JwtTime$.validateNowIsBetween(JwtTime.scala:46)
   at pdi.jwt.JwtTime$.validateNowIsBetweenSeconds(JwtTime.scala:62)
-  at pdi.jwt.JwtCore$class.validate(Jwt.scala:262)
-  at pdi.jwt.Jwt$.validate(Jwt.scala:18)
-  at pdi.jwt.JwtCore$class.validate(Jwt.scala:277)
-  at pdi.jwt.Jwt$.validate(Jwt.scala:18)
-  ... 472 elided
+  at pdi.jwt.JwtCore$class.validateTiming(Jwt.scala:290)
+  at pdi.jwt.Jwt$.validateTiming(Jwt.scala:20)
+  at pdi.jwt.JwtCore$class.validate(Jwt.scala:301)
+  at pdi.jwt.Jwt$.validate(Jwt.scala:20)
+  at pdi.jwt.JwtCore$class.validate(Jwt.scala:361)
+  at pdi.jwt.Jwt$.validate(Jwt.scala:20)
+  ... 476 elided
 
 scala> Jwt.isValid(Jwt.encode(JwtClaim().startsIn(5)))
 res48: Boolean = false
@@ -150,10 +152,10 @@ java.lang.IllegalArgumentException: Input byte[] should at least have 2 bytes fo
   at pdi.jwt.JwtBase64$.decode(JwtBase64.scala:3)
   at pdi.jwt.JwtBase64$.decodeString(JwtBase64.scala:11)
   at pdi.jwt.JwtBase64$.decodeString(JwtBase64.scala:14)
-  at pdi.jwt.JwtCore$class.pdi$jwt$JwtCore$$splitToken(Jwt.scala:171)
-  at pdi.jwt.JwtCore$class.validate(Jwt.scala:276)
-  at pdi.jwt.Jwt$.validate(Jwt.scala:18)
-  ... 488 elided
+  at pdi.jwt.JwtCore$class.pdi$jwt$JwtCore$$splitToken(Jwt.scala:182)
+  at pdi.jwt.JwtCore$class.validate(Jwt.scala:360)
+  at pdi.jwt.Jwt$.validate(Jwt.scala:20)
+  ... 492 elided
 
 scala> Jwt.isValid("a.b.c")
 res51: Boolean = false
