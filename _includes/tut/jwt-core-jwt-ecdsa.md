@@ -16,26 +16,26 @@ import pdi.jwt.{Jwt, JwtAlgorithm}
 
 scala> // We specify the curve we want to use
      | val ecGenSpec = new ECGenParameterSpec("P-521")
-ecGenSpec: java.security.spec.ECGenParameterSpec = java.security.spec.ECGenParameterSpec@76178d40
+ecGenSpec: java.security.spec.ECGenParameterSpec = java.security.spec.ECGenParameterSpec@7bdf8f0b
 
 scala> // We are going to use a ECDSA algorithm
      | // and the Bouncy Castle provider
      | val generatorEC = KeyPairGenerator.getInstance("ECDSA", "BC")
-generatorEC: java.security.KeyPairGenerator = org.bouncycastle.jcajce.provider.asymmetric.ec.KeyPairGeneratorSpi$ECDSA@298c22c1
+generatorEC: java.security.KeyPairGenerator = org.bouncycastle.jcajce.provider.asymmetric.ec.KeyPairGeneratorSpi$ECDSA@33d55ab6
 
 scala> generatorEC.initialize(ecGenSpec, new SecureRandom())
 
 scala> // Generate a pair of keys, one private for encoding
      | // and one public for decoding
      | val ecKey = generatorEC.generateKeyPair()
-ecKey: java.security.KeyPair = java.security.KeyPair@4fe0d99
+ecKey: java.security.KeyPair = java.security.KeyPair@1f098996
 ```
 
 #### Usage
 
 ```scala
 scala> val token = Jwt.encode("""{"user":1}""", ecKey.getPrivate, JwtAlgorithm.ES512)
-token: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzUxMiJ9.eyJ1c2VyIjoxfQ.MIGIAkIBhGTXZmXF1tIuuOzmcYkvgXaUUAMa2mD_XVyLEsH_-P2uCy-VNCSlIqLXsmBJifENlVrjn0gHhFtCmd7cb3IGeQoCQgCPLOONoWdG-ZTKmWX3_BvoY4LA7ahnq2ny60N0_Ey_OJ4QfpEfzFQE7cAQBzqypyIwdGRZCoTea-UwNSGvAY98Gw
+token: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzUxMiJ9.eyJ1c2VyIjoxfQ.MIGIAkIAy12nK5qXNQm2N9bgyf4WUE2mrUBKO60A5cg9TDOHJZQdMXdJD-NoDUSHHWv4kd36bdVEQhZcrI7tO9P8y474AJgCQgEPcAGkS8Ip3rYGBp_YyXZcM855xOig4aiH4QdO0wX2IzIDYYvUGTWYKRCpwvt055xJYvRZLMJJP7Arn37L-p4NzQ
 
 scala> Jwt.decode(token, ecKey.getPublic)
 res6: scala.util.Try[String] = Success({"user":1})
@@ -70,13 +70,13 @@ scala> // Here we are using the P-521 curve but you need to change it
 curveParams: org.bouncycastle.jce.spec.ECNamedCurveParameterSpec = org.bouncycastle.jce.spec.ECNamedCurveParameterSpec@1b739184
 
 scala> val curveSpec: ECParameterSpec = new ECNamedCurveSpec( "P-521", curveParams.getCurve(), curveParams.getG(), curveParams.getN(), curveParams.getH());
-curveSpec: java.security.spec.ECParameterSpec = org.bouncycastle.jce.spec.ECNamedCurveSpec@13cdb385
+curveSpec: java.security.spec.ECParameterSpec = org.bouncycastle.jce.spec.ECNamedCurveSpec@7f5dea96
 
 scala> val privateSpec = new ECPrivateKeySpec(S.underlying(), curveSpec)
-privateSpec: java.security.spec.ECPrivateKeySpec = java.security.spec.ECPrivateKeySpec@3381e845
+privateSpec: java.security.spec.ECPrivateKeySpec = java.security.spec.ECPrivateKeySpec@18b4af34
 
 scala> val publicSpec = new ECPublicKeySpec(new ECPoint(X.underlying(), Y.underlying()), curveSpec)
-publicSpec: java.security.spec.ECPublicKeySpec = java.security.spec.ECPublicKeySpec@6b504a15
+publicSpec: java.security.spec.ECPublicKeySpec = java.security.spec.ECPublicKeySpec@7a92124c
 
 scala> val privateKeyEC = KeyFactory.getInstance("ECDSA", "BC").generatePrivate(privateSpec)
 privateKeyEC: java.security.PrivateKey =
@@ -94,12 +94,12 @@ EC Public Key
 
 ```scala
 scala> val token = Jwt.encode("""{"user":1}""", privateKeyEC, JwtAlgorithm.ES512)
-token: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzUxMiJ9.eyJ1c2VyIjoxfQ.MIGHAkFzAAvqbPkyS1RayXGEPoZfkiaqWk54o1GeTHlJchvxYqmVdK9N0HEYPHM_vBHDPfdOwTHH4eunQuMB_KyNHWgqJAJCAbJvcMcBYN9xgVyzilgh3JJufIuVeO6cC89Roa23XV5MI_RlfFjFIpVezmwDRHEmN6atQK3on56art6AmKRP8-w2
+token: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzUxMiJ9.eyJ1c2VyIjoxfQ.MIGIAkIA04JOOD0CzJAFtOVBDmgFOQlBelT6K0i75z3w0oK-n_7lNjc5GAV5VJ8p5HQtm4qti1WGJ5pZK3JXggztEB2iGd4CQgFc0u3_KT4zrWgiPWHlc_NinhYnCAhOo8VvTfN8P11oqNv78M4SOiz6k-c3Ya-FOvmcreetlMEjNrnOVRGeJPZ6ow
 
 scala> Jwt.decode(token, publicKeyEC)
 res10: scala.util.Try[String] = Success({"user":1})
 
 scala> // Wrong key...
      | Jwt.decode(token, ecKey.getPublic)
-res12: scala.util.Try[String] = Failure(pdi.jwt.JwtValidationException: Invalid signature for this token.)
+res12: scala.util.Try[String] = Failure(pdi.jwt.exceptions.JwtValidationException: Invalid signature for this token.)
 ```

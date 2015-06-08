@@ -84,5 +84,5 @@ scala> // Writes
 res17: play.api.libs.json.JsValue = {"typ":"JWT","alg":"HS256"}
 
 scala> Json.toJson(JwtClaim("""{"user":1}""").issuedNow.expiresIn(10))
-res18: play.api.libs.json.JsValue = {"exp":1433255550,"iat":1433255540,"user":1}
+res18: play.api.libs.json.JsValue = {"exp":1433764790,"iat":1433764780,"user":1}
 ```

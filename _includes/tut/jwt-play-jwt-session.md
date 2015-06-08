@@ -32,7 +32,7 @@ session: pdi.jwt.JwtSession = JwtSession({"alg":"none"},{"user":1,"nbf":14315204
 
 scala> // We can access a specific key
      | session.get("user")
-res8: play.api.libs.json.JsValue = 1
+res8: Option[play.api.libs.json.JsValue] = Some(1)
 
 scala> // Test if the session is empty or not
      | // (it is not here since we have several keys in the claimData)
@@ -70,7 +70,7 @@ scala> case class User(id: Long, name: String)
 defined class User
 
 scala> implicit val formatUser = Json.format[User]
-formatUser: play.api.libs.json.OFormat[User] = play.api.libs.json.OFormat$$anon$1@1432a202
+formatUser: play.api.libs.json.OFormat[User] = play.api.libs.json.OFormat$$anon$1@1e93df8a
 
 scala> // Next, adding it to a new session
      | val session2 = JwtSession() + ("user", User(42, "Paul"))
