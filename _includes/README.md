@@ -1,4 +1,4 @@
-# JWT Scala 0.4.0
+# JWT Scala 0.4.1
 
 Scala support for JSON Web Token ([JWT](http://tools.ietf.org/html/draft-ietf-oauth-json-web-token)). Supports Java 1.6+, Scala 2.10.x and Scala 2.11.x. Optional helpers for Play Framework, Play JSON, Json4s Native and Json4s Jackson.
 
@@ -20,13 +20,13 @@ You can also check a [standalone Play application](https://github.com/pauldijou/
 
 ## Install
 
-In the following snippet, replace `[name]` with the actual name of the project you need. **Using Java 1.6 or 1.7?** Add `-legacy` after the name of the project. See [below](#which-java) why. **Using Play 2.3?** Use `0.2.1` version since `0.4.0` and up will target Play 2.4.
+In the following snippet, replace `[name]` with the actual name of the project you need. **Using Java 1.6 or 1.7?** Add `-legacy` after the name of the project. See [below](#which-java) why. **Using Play 2.3?** Use `0.2.1` version since `0.3.0` and up will target Play 2.4.
 
 **build.sbt**
 
 ```scala
 libraryDependencies ++= Seq(
-  "com.pauldijou" %% "[name]" % "0.4.0"
+  "com.pauldijou" %% "[name]" % "0.4.1"
 )
 ```
 
@@ -36,7 +36,7 @@ libraryDependencies ++= Seq(
 
 ```scala
 libraryDependencies ++= Seq(
-  "com.pauldijou" %% "jwt-play-legacy" % "0.4.0"
+  "com.pauldijou" %% "jwt-play-legacy" % "0.4.1"
 )
 ```
 
@@ -81,6 +81,18 @@ This lib doesn't want to impose anything, that's why, by default, a JWT claim is
 If you found any bug or need more documentation, immediately feel an [issue in GitHub](https://github.com/pauldijou/jwt-scala/issues). I should read most of them.
 
 If you want to submit a PR to improve the project, that would be awesome. If, in top of that, you want to run the tests (yeah, because there are tests! A few of them...) before submitting it, you are just amasing but also don't run the tests globally. If you do `sbt test`, the whole universe will nearly collapse due to classpath errors that are totally beyond the understanding of the current me. Run them by project, like `playEdge/test` inside an `sbt` console. And even so, they might fail because of a `LinkageError`, just run them twice and it will work... I don't know why... I drank too much whisky trying to understand it so I just stopped. If you are a classpath God, just ping me and I will have questions for you.
+
+## Notes
+
+- **Test**: run all tests with `sbt testAll` (if `java.lang.LinkageError`, just re-run the command)
+- **Publish**: update version numbers in `build.sbt` and run `sbt release` (be sure to either `reload` inside sbt or start a new sbt)
+- **Scaladoc**: to manually generate all scaladoc, run `sbt scaladoc`
+- **Publish docs**: to manually build and push online the doc website, run `sbt publish-doc`
+- **Docs**: to have a locally running doc website:
+  - `sbt ~docs/makeSite`
+  - `cd docs/target/site`
+  - `jekyll serve`
+  - Go to [http://localhost:4000/jwt-scala/](http://localhost:4000/jwt-scala/)
 
 ## License
 

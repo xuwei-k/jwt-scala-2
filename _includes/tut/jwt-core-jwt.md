@@ -26,7 +26,7 @@ res3: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzM4NCJ9.eyJ1c2VyIjoxfQ.Do0PQWccbp1J7
 scala> // Encode from case class, header automatically generated
      | // Set that the token has been issued now and expires in 10 seconds
      | Jwt.encode(JwtClaim({"""{"user":1}"""}).issuedNow.expiresIn(10), "secretKey", JwtAlgorithm.HS512)
-res6: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE0Mzc3NTkwOTgsImlhdCI6MTQzNzc1OTA4OCwidXNlciI6MX0.tbrbg4lzBJf6Of1shmnaIR-eX0YSa06hExXChiax58h6OCLuD9_bfX3SkjcbTUDqKLST5HosvPihbnlMbLDsTw
+res6: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE0NDM2MTczMTYsImlhdCI6MTQ0MzYxNzMwNiwidXNlciI6MX0.iknVpn5YGENsTqPDK3ocZxcNkyACiRzj-UXTbh5Rkv_0IL4t1Zt_8eoC6w6-ECAIwR_2NPRcR3fm4IdZj4-TlA
 
 scala> // You can encode without signing it
      | Jwt.encode("""{"user":1}""")
@@ -81,7 +81,7 @@ res31: scala.util.Try[String] = Failure(pdi.jwt.exceptions.JwtValidationExceptio
 
 scala> // Failure if the token only starts in 5 seconds
      | Jwt.decode(Jwt.encode(JwtClaim().startsIn(5)))
-res33: scala.util.Try[String] = Failure(pdi.jwt.exceptions.JwtNotBeforeException: The token will only be valid after 2015-07-24T17:31:34Z)
+res33: scala.util.Try[String] = Failure(pdi.jwt.exceptions.JwtNotBeforeException: The token will only be valid after 2015-09-30T12:48:32Z)
 ```
 
 ### Validating
@@ -129,7 +129,7 @@ res45: Boolean = false
 
 scala> // The token hasn't started yet!
      | Jwt.validate(Jwt.encode(JwtClaim().startsIn(5)))
-pdi.jwt.exceptions.JwtNotBeforeException: The token will only be valid after 2015-07-24T17:31:35Z
+pdi.jwt.exceptions.JwtNotBeforeException: The token will only be valid after 2015-09-30T12:48:33Z
   at pdi.jwt.JwtTime$.validateNowIsBetween(JwtTime.scala:48)
   at pdi.jwt.JwtTime$.validateNowIsBetweenSeconds(JwtTime.scala:64)
   at pdi.jwt.JwtCore$class.validateTiming(Jwt.scala:509)

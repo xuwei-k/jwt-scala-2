@@ -45,7 +45,7 @@ token: String = eyJhbGciOiJub25lIn0.eyJ1c2VyIjoxLCJuYmYiOjE0MzE1MjA0MjF9.
 
 scala> // You can create a JwtSession from a token of course
      | JwtSession.deserialize(token)
-res14: pdi.jwt.JwtSession = JwtSession({"alg":"none"},{},)
+res14: pdi.jwt.JwtSession = JwtSession({"alg":"none"},{"user":1,"nbf":1431520421},)
 
 scala> // You could refresh the session to set its expiration in a few seconds from now
      | // but you need to set "session.maxAge" in your "application.conf" and since this
@@ -70,7 +70,7 @@ scala> case class User(id: Long, name: String)
 defined class User
 
 scala> implicit val formatUser = Json.format[User]
-formatUser: play.api.libs.json.OFormat[User] = play.api.libs.json.OFormat$$anon$1@70f10111
+formatUser: play.api.libs.json.OFormat[User] = play.api.libs.json.OFormat$$anon$1@41411fd8
 
 scala> // Next, adding it to a new session
      | val session2 = JwtSession() + ("user", User(42, "Paul"))
@@ -100,12 +100,12 @@ scala> // What about some headers?
 request: play.api.test.FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = GET /
 
 scala> request.jwtSession
-res26: pdi.jwt.JwtSession = JwtSession({"alg":"none"},{},)
+res26: pdi.jwt.JwtSession = JwtSession({"alg":"none"},{"user":{"id":42,"name":"Paul"}},)
 
 scala> // It means you can directly read case classes from the session!
      | // And that's pretty cool
      | request.jwtSession.getAs[User]("user")
-res29: Option[User] = None
+res29: Option[User] = Some(User(42,Paul))
 ```
 
 ## Play Result
@@ -124,41 +124,41 @@ result: play.api.mvc.Result = Result(200, Map())
 
 scala> // We can already get a JwtSession from our implicit RequestHeader
      | result.jwtSession
-res34: pdi.jwt.JwtSession = JwtSession({"alg":"none"},{},)
+res34: pdi.jwt.JwtSession = JwtSession({"alg":"none"},{"user":{"id":42,"name":"Paul"}},)
 
 scala> // Setting a new empty JwtSession
-     | result.withNewJwtSession
-res36: play.api.mvc.Result = Result(200, Map(Authorization -> Bearer eyJhbGciOiJub25lIn0.e30.))
+     | result = result.withNewJwtSession
+result: play.api.mvc.Result = Result(200, Map(Authorization -> Bearer eyJhbGciOiJub25lIn0.e30.))
 
 scala> // Or from an existing JwtSession
-     | result.withJwtSession(session2)
-res38: play.api.mvc.Result = Result(200, Map(Authorization -> Bearer eyJhbGciOiJub25lIn0.eyJ1c2VyIjp7ImlkIjo0MiwibmFtZSI6IlBhdWwifX0.))
+     | result = result.withJwtSession(session2)
+result: play.api.mvc.Result = Result(200, Map(Authorization -> Bearer eyJhbGciOiJub25lIn0.eyJ1c2VyIjp7ImlkIjo0MiwibmFtZSI6IlBhdWwifX0.))
 
 scala> // Or from a JsObject
-     | result.withJwtSession(Json.obj(("user", 1), ("key", "value")))
-res40: play.api.mvc.Result = Result(200, Map(Authorization -> Bearer eyJhbGciOiJub25lIn0.eyJ1c2VyIjoxLCJrZXkiOiJ2YWx1ZSJ9.))
+     | result = result.withJwtSession(Json.obj(("id", 1), ("key", "value")))
+result: play.api.mvc.Result = Result(200, Map(Authorization -> Bearer eyJhbGciOiJub25lIn0.eyJpZCI6MSwia2V5IjoidmFsdWUifQ.))
 
 scala> // Or from (key, value)
-     | result.withJwtSession(("user", 1), ("key", "value"))
-res42: play.api.mvc.Result = Result(200, Map(Authorization -> Bearer eyJhbGciOiJub25lIn0.eyJ1c2VyIjoxLCJrZXkiOiJ2YWx1ZSJ9.))
+     | result = result.withJwtSession(("id", 1), ("key", "value"))
+result: play.api.mvc.Result = Result(200, Map(Authorization -> Bearer eyJhbGciOiJub25lIn0.eyJpZCI6MSwia2V5IjoidmFsdWUifQ.))
 
 scala> // We can add stuff to the current session (only (String, String))
-     | result.addingToJwtSession(("key2", "value2"), ("key3", "value3"))
-res44: play.api.mvc.Result = Result(200, Map(Authorization -> Bearer eyJhbGciOiJub25lIn0.eyJrZXkyIjoidmFsdWUyIiwia2V5MyI6InZhbHVlMyJ9.))
+     | result = result.addingToJwtSession(("key2", "value2"), ("key3", "value3"))
+result: play.api.mvc.Result = Result(200, Map(Authorization -> Bearer eyJhbGciOiJub25lIn0.eyJpZCI6MSwia2V5IjoidmFsdWUiLCJrZXkyIjoidmFsdWUyIiwia2V5MyI6InZhbHVlMyJ9.))
 
 scala> // Or directly classes or objects if you have the correct implicit Writes
-     | result.addingToJwtSession("user2", User(1, "Louis"))
-res46: play.api.mvc.Result = Result(200, Map(Authorization -> Bearer eyJhbGciOiJub25lIn0.eyJ1c2VyMiI6eyJpZCI6MSwibmFtZSI6IkxvdWlzIn19.))
+     | result = result.addingToJwtSession("user", User(1, "Paul"))
+result: play.api.mvc.Result = Result(200, Map(Authorization -> Bearer eyJhbGciOiJub25lIn0.eyJpZCI6MSwia2V5IjoidmFsdWUiLCJrZXkyIjoidmFsdWUyIiwia2V5MyI6InZhbHVlMyIsInVzZXIiOnsiaWQiOjEsIm5hbWUiOiJQYXVsIn19.))
 
 scala> // Removing from session
-     | result.removingFromJwtSession("key2", "key3")
-res48: play.api.mvc.Result = Result(200, Map(Authorization -> Bearer eyJhbGciOiJub25lIn0.e30.))
+     | result = result.removingFromJwtSession("key2", "key3")
+result: play.api.mvc.Result = Result(200, Map(Authorization -> Bearer eyJhbGciOiJub25lIn0.eyJpZCI6MSwia2V5IjoidmFsdWUiLCJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiUGF1bCJ9fQ.))
 
 scala> // Refresh the current session
-     | result.refreshJwtSession
-res50: play.api.mvc.Result = Result(200, Map())
+     | result = result.refreshJwtSession
+result: play.api.mvc.Result = Result(200, Map(Authorization -> Bearer eyJhbGciOiJub25lIn0.eyJpZCI6MSwia2V5IjoidmFsdWUiLCJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiUGF1bCJ9fQ.))
 
 scala> // So, at the end, you can do
      | result.jwtSession.getAs[User]("user")
-res52: Option[User] = None
+res44: Option[User] = Some(User(1,Paul))
 ```
