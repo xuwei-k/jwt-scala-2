@@ -1,4 +1,4 @@
-# JWT Scala 0.4.1
+# JWT Scala 0.5.0
 
 Scala support for JSON Web Token ([JWT](http://tools.ietf.org/html/draft-ietf-oauth-json-web-token)). Supports Java 1.6+, Scala 2.10.x and Scala 2.11.x. Optional helpers for Play Framework, Play JSON, Json4s Native and Json4s Jackson.
 
@@ -13,6 +13,7 @@ JWT Scala is divided in several sub-projects each targeting a specific use-case.
 |`jwt-play`|Play framework|[JwtSession](https://pauldijou.github.io/jwt-scala/samples/jwt-play)|[API](https://pauldijou.github.io/jwt-scala/api/latest/jwt-play)|
 |`jwt-json4s-native`|`json4s` Native implementation|[JwtJson4s](https://pauldijou.github.io/jwt-scala/samples/jwt-json4s)|[API](https://pauldijou.github.io/jwt-scala/api/latest/jwt-json4s)|
 |`jwt-json4s-jackson`|`json4s` Jackson implementation|[JwtJson4s](https://pauldijou.github.io/jwt-scala/samples/jwt-json4s)|[API](https://pauldijou.github.io/jwt-scala/api/latest/jwt-json4s)|
+|`jwt-circe`|`Circe` lib|[JwtCirce](https://pauldijou.github.io/jwt-scala/samples/jwt-circe)|[API](https://pauldijou.github.io/jwt-scala/api/latest/jwt-circe)|
 
 If you need a previous version of the Scaladoc API, check [the bottom of this page](https://pauldijou.github.io/jwt-scala/api/#old-apis)
 
@@ -26,7 +27,7 @@ In the following snippet, replace `[name]` with the actual name of the project y
 
 ```scala
 libraryDependencies ++= Seq(
-  "com.pauldijou" %% "[name]" % "0.4.1"
+  "com.pauldijou" %% "[name]" % "0.5.0"
 )
 ```
 
@@ -36,7 +37,7 @@ libraryDependencies ++= Seq(
 
 ```scala
 libraryDependencies ++= Seq(
-  "com.pauldijou" %% "jwt-play-legacy" % "0.4.1"
+  "com.pauldijou" %% "jwt-play-legacy" % "0.5.0"
 )
 ```
 
