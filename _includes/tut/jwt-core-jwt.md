@@ -26,7 +26,7 @@ res3: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzM4NCJ9.eyJ1c2VyIjoxfQ.Do0PQWccbp1J7
 scala> // Encode from case class, header automatically generated
      | // Set that the token has been issued now and expires in 10 seconds
      | Jwt.encode(JwtClaim({"""{"user":1}"""}).issuedNow.expiresIn(10), "secretKey", JwtAlgorithm.HS512)
-res6: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE0NjExNTY4MzYsImlhdCI6MTQ2MTE1NjgyNiwidXNlciI6MX0.UdG3YyZGQi8OznYu95T4g5sx2rg8iX-Ogb-6hksm57gJEd2b8YioxOJLJO434sj0ickkWp3nwTzDe9VK1UenHA
+res6: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE0Njc3Mzc0NTMsImlhdCI6MTQ2NzczNzQ0MywidXNlciI6MX0.hJXNPhIEzJKPcdYF9KEkvAdVslKthOKjsybcKeF4TpnqgXcZvDErbZPgfQ73kUSLxTBOG7vQYb62YNUGR8Juzw
 
 scala> // You can encode without signing it
      | Jwt.encode("""{"user":1}""")
@@ -83,7 +83,7 @@ res31: scala.util.Try[String] = Failure(pdi.jwt.exceptions.JwtValidationExceptio
 
 scala> // Failure if the token only starts in 5 seconds
      | Jwt.decode(Jwt.encode(JwtClaim().startsIn(5)))
-res33: scala.util.Try[String] = Failure(pdi.jwt.exceptions.JwtNotBeforeException: The token will only be valid after 2016-04-20T12:53:53Z)
+res33: scala.util.Try[String] = Failure(pdi.jwt.exceptions.JwtNotBeforeException: The token will only be valid after 2016-07-05T16:50:49Z)
 ```
 
 ### Validating
@@ -108,7 +108,7 @@ pdi.jwt.exceptions.JwtValidationException: Invalid signature for this token or w
   at pdi.jwt.Jwt$.validate(Jwt.scala:23)
   at pdi.jwt.JwtCore$class.validate(Jwt.scala:707)
   at pdi.jwt.Jwt$.validate(Jwt.scala:23)
-  ... 450 elided
+  ... 430 elided
 
 scala> Jwt.isValid(token, "wrongKey", Seq(JwtAlgorithm.HS256))
 res39: Boolean = false
@@ -128,14 +128,14 @@ pdi.jwt.exceptions.JwtNonEmptySignatureException: Non-empty signature found insi
   at pdi.jwt.Jwt$.validate(Jwt.scala:23)
   at pdi.jwt.JwtCore$class.validate(Jwt.scala:689)
   at pdi.jwt.Jwt$.validate(Jwt.scala:23)
-  ... 482 elided
+  ... 462 elided
 
 scala> Jwt.isValid(token)
 res45: Boolean = false
 
 scala> // The token hasn't started yet!
      | Jwt.validate(Jwt.encode(JwtClaim().startsIn(5)))
-pdi.jwt.exceptions.JwtNotBeforeException: The token will only be valid after 2016-04-20T12:53:54Z
+pdi.jwt.exceptions.JwtNotBeforeException: The token will only be valid after 2016-07-05T16:50:50Z
   at pdi.jwt.JwtTime$.validateNowIsBetween(JwtTime.scala:48)
   at pdi.jwt.JwtTime$.validateNowIsBetweenSeconds(JwtTime.scala:64)
   at pdi.jwt.JwtCore$class.validateTiming(Jwt.scala:592)
@@ -146,7 +146,7 @@ pdi.jwt.exceptions.JwtNotBeforeException: The token will only be valid after 201
   at pdi.jwt.Jwt$.validate(Jwt.scala:23)
   at pdi.jwt.JwtCore$class.validate(Jwt.scala:689)
   at pdi.jwt.Jwt$.validate(Jwt.scala:23)
-  ... 498 elided
+  ... 478 elided
 
 scala> Jwt.isValid(Jwt.encode(JwtClaim().startsIn(5)))
 res48: Boolean = false
@@ -165,7 +165,7 @@ java.lang.IllegalArgumentException: Input byte[] should at least have 2 bytes fo
   at pdi.jwt.Jwt$.validate(Jwt.scala:23)
   at pdi.jwt.JwtCore$class.validate(Jwt.scala:689)
   at pdi.jwt.Jwt$.validate(Jwt.scala:23)
-  ... 514 elided
+  ... 494 elided
 
 scala> Jwt.isValid("a.b.c")
 res51: Boolean = false
@@ -177,21 +177,21 @@ All validating and decoding methods support a final optional argument as a `JwtO
 
 ```scala
 scala> val expiredToken = Jwt.encode(JwtClaim().by("me").expiresIn(-1));
-expiredToken: String = eyJhbGciOiJub25lIn0.eyJpc3MiOiJtZSIsImV4cCI6MTQ2MTE1NjgyOH0.
+expiredToken: String = eyJhbGciOiJub25lIn0.eyJpc3MiOiJtZSIsImV4cCI6MTQ2NzczNzQ0NX0.
 
 scala> // Fail since the token is expired
      | Jwt.isValid(expiredToken)
 res53: Boolean = false
 
 scala> Jwt.decode(expiredToken)
-res54: scala.util.Try[String] = Failure(pdi.jwt.exceptions.JwtExpirationException: The token is expired since 2016-04-20T12:53:48Z)
+res54: scala.util.Try[String] = Failure(pdi.jwt.exceptions.JwtExpirationException: The token is expired since 2016-07-05T16:50:45Z)
 
 scala> // Let's disable expiration check
      | Jwt.isValid(expiredToken, JwtOptions(expiration = false))
 res56: Boolean = true
 
 scala> Jwt.decode(expiredToken, JwtOptions(expiration = false))
-res57: scala.util.Try[String] = Success({"iss":"me","exp":1461156828})
+res57: scala.util.Try[String] = Success({"iss":"me","exp":1467737445})
 ```
 
 You can also specify a leeway, in seconds, to account for clock skew.
@@ -202,5 +202,5 @@ scala> // Allow 30sec leeway
 res59: Boolean = true
 
 scala> Jwt.decode(expiredToken, JwtOptions(leeway = 30))
-res60: scala.util.Try[String] = Success({"iss":"me","exp":1461156828})
+res60: scala.util.Try[String] = Success({"iss":"me","exp":1467737445})
 ```
