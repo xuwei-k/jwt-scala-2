@@ -70,7 +70,7 @@ scala> case class User(id: Long, name: String)
 defined class User
 
 scala> implicit val formatUser = Json.format[User]
-formatUser: play.api.libs.json.OFormat[User] = play.api.libs.json.OFormat$$anon$1@2727b2c
+formatUser: play.api.libs.json.OFormat[User] = play.api.libs.json.OFormat$$anon$1@5a53ccfe
 
 scala> // Next, adding it to a new session
      | val session2 = JwtSession() + ("user", User(42, "Paul"))
