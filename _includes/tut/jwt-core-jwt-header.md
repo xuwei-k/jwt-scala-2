@@ -18,6 +18,6 @@ scala> // You can stringify it to JSON
 res4: String = {"typ":"JWT","alg":"HS256"}
 
 scala> // You can assign the default type (but it would have be done automatically anyway)
-     | JwtHeader(JwtAlgorithm.HS1).withType
-res6: pdi.jwt.JwtHeader = JwtHeader(Some(HS1),Some(JWT),None)
+     | JwtHeader(JwtAlgorithm.HS256).withType
+res6: pdi.jwt.JwtHeader = JwtHeader(Some(HS256),Some(JWT),None)
 ```
