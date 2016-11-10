@@ -1,4 +1,4 @@
-# JWT Scala 0.9.0
+# JWT Scala 0.9.1
 
 Scala support for JSON Web Token ([JWT](http://tools.ietf.org/html/draft-ietf-oauth-json-web-token)). Supports Java 1.6+, Scala 2.10.x and Scala 2.11.x. Optional helpers for Play Framework, Play JSON, Json4s Native and Json4s Jackson.
 
@@ -27,7 +27,7 @@ In the following snippet, replace `[name]` with the actual name of the project y
 
 ```scala
 libraryDependencies ++= Seq(
-  "com.pauldijou" %% "[name]" % "0.9.0"
+  "com.pauldijou" %% "[name]" % "0.9.1"
 )
 ```
 
@@ -37,7 +37,7 @@ libraryDependencies ++= Seq(
 
 ```scala
 libraryDependencies ++= Seq(
-  "com.pauldijou" %% "jwt-play-legacy" % "0.9.0"
+  "com.pauldijou" %% "jwt-play-legacy" % "0.9.1"
 )
 ```
 
@@ -52,22 +52,19 @@ If you are using `String` key, please keep in mind that such keys need to be par
 
 Check [ECDSA samples](https://pauldijou.github.io/jwt-scala/samples/jwt-ecdsa) for more infos.
 
-|Name|Alias|Description|
-|----|-----|-----------|
-|HMD5|HmacMD5|HMAC using MD5 algorithm|
-|HS1|HmacSHA1|HMAC using SHA-1 algorithm|
-|HS224|HmacSHA224|HMAC using SHA-224 algorithm|
-|HS256|HmacSHA256|HMAC using SHA-256 algorithm|
-|HS384|HmacSHA384|HMAC using SHA-384 algorithm|
-|HS512|HmacSHA512|HMAC using SHA-512 algorithm|
-|RS1|RSASHA1|RSASSA using SHA-1 algorithm|
-|RS256|RSASHA256|RSASSA using SHA-256 algorithm|
-|RS384|RSASHA384|RSASSA using SHA-384 algorithm|
-|RS512|RSASHA512|RSASSA using SHA-512 algorithm|
-|ES1|ECDSASHA1|ECDSA using SHA-1 algorithm|
-|ES256|ECDSASHA256|ECDSA using SHA-256 algorithm|
-|ES384|ECDSASHA384|ECDSA using SHA-384 algorithm|
-|ES512|ECDSASHA512|ECDSA using SHA-512 algorithm|
+|Name|Description|
+|----|-----------|
+|HMD5|HMAC using MD5 algorithm|
+|HS224|HMAC using SHA-224 algorithm|
+|HS256|HMAC using SHA-256 algorithm|
+|HS384|HMAC using SHA-384 algorithm|
+|HS512|HMAC using SHA-512 algorithm|
+|RS256|RSASSA using SHA-256 algorithm|
+|RS384|RSASSA using SHA-384 algorithm|
+|RS512|RSASSA using SHA-512 algorithm|
+|ES256|ECDSA using SHA-256 algorithm|
+|ES384|ECDSA using SHA-384 algorithm|
+|ES512|ECDSA using SHA-512 algorithm|
 
 ## <a name="which-java"></a>Which Java?
 
