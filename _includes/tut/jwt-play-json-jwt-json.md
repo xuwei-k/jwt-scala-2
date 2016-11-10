@@ -84,12 +84,12 @@ scala> // Writes
 res17: play.api.libs.json.JsValue = {"typ":"JWT","alg":"HS256"}
 
 scala> Json.toJson(JwtClaim("""{"user":1}""").issuedNow.expiresIn(10))
-res18: play.api.libs.json.JsValue = {"exp":1478782993,"iat":1478782983,"user":1}
+res18: play.api.libs.json.JsValue = {"exp":1478789209,"iat":1478789199,"user":1}
 
 scala> // Or
      | JwtHeader(JwtAlgorithm.HS256).toJsValue
 res20: play.api.libs.json.JsValue = {"typ":"JWT","alg":"HS256"}
 
 scala> JwtClaim("""{"user":1}""").issuedNow.expiresIn(10).toJsValue
-res21: play.api.libs.json.JsValue = {"exp":1478782994,"iat":1478782984,"user":1}
+res21: play.api.libs.json.JsValue = {"exp":1478789209,"iat":1478789199,"user":1}
 ```
