@@ -1,0 +1,3 @@
+## Wait for it...
+
+Play Framework is not supported anymore until it compiles in Scala 2.12
