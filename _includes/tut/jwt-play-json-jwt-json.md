@@ -74,6 +74,9 @@ The project provides implicit reader and writer for both `JwtHeader` and `JwtCla
 scala> import pdi.jwt._
 import pdi.jwt._
 
+scala> import pdi.jwt.JwtJson._
+import pdi.jwt.JwtJson._
+
 scala> // Reads
      | Json.fromJson[JwtHeader](header)
 res14: play.api.libs.json.JsResult[pdi.jwt.JwtHeader] = JsSuccess(JwtHeader(Some(HS256),Some(JWT),None),)
@@ -86,12 +89,12 @@ scala> // Writes
 res17: play.api.libs.json.JsValue = {"typ":"JWT","alg":"HS256"}
 
 scala> Json.toJson(JwtClaim("""{"user":1}""").issuedNow.expiresIn(10))
-res18: play.api.libs.json.JsValue = {"exp":1487512707,"iat":1487512697,"user":1}
+res18: play.api.libs.json.JsValue = {"exp":1488130704,"iat":1488130694,"user":1}
 
 scala> // Or
      | JwtHeader(JwtAlgorithm.HS256).toJsValue
 res20: play.api.libs.json.JsValue = {"typ":"JWT","alg":"HS256"}
 
 scala> JwtClaim("""{"user":1}""").issuedNow.expiresIn(10).toJsValue
-res21: play.api.libs.json.JsValue = {"exp":1487512707,"iat":1487512697,"user":1}
+res21: play.api.libs.json.JsValue = {"exp":1488130704,"iat":1488130694,"user":1}
 ```

@@ -70,7 +70,7 @@ scala> case class User(id: Long, name: String)
 defined class User
 
 scala> implicit val formatUser = Json.format[User]
-formatUser: play.api.libs.json.OFormat[User] = play.api.libs.json.OFormat$$anon$1@40765a93
+formatUser: play.api.libs.json.OFormat[User] = play.api.libs.json.OFormat$$anon$1@21b9bc65
 
 scala> // Next, adding it to a new session
      | val session2 = JwtSession() + ("user", User(42, "Paul"))
@@ -86,8 +86,13 @@ res21: Option[User] = Some(User(42,Paul))
 You can extract a `JwtSession` from a `RequestHeader`.
 
 ```scala
-scala> import pdi.jwt._, play.api.test.{FakeRequest, FakeHeaders}
+scala> import pdi.jwt._
 import pdi.jwt._
+
+scala> import pdi.jwt.JwtSession._
+import pdi.jwt.JwtSession._
+
+scala> import play.api.test.{FakeRequest, FakeHeaders}
 import play.api.test.{FakeRequest, FakeHeaders}
 
 scala> // Default JwtSession
