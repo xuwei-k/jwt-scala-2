@@ -1,4 +1,4 @@
-# JWT Scala 0.13.0
+# JWT Scala 0.14.0
 
 Scala support for JSON Web Token ([JWT](http://tools.ietf.org/html/draft-ietf-oauth-json-web-token)). Supports Java 1.6+, Scala 2.11.x and Scala 2.12.x. Optional helpers for Play Framework, Play JSON, Json4s Native, Json4s Jackson, Circe and uPickle.
 
@@ -28,7 +28,7 @@ In the following snippet, replace `[name]` with the actual name of the project y
 
 ```scala
 libraryDependencies ++= Seq(
-  "com.pauldijou" %% "[name]" % "0.13.0"
+  "com.pauldijou" %% "[name]" % "0.14.0"
 )
 ```
 
@@ -38,7 +38,7 @@ libraryDependencies ++= Seq(
 
 ```scala
 libraryDependencies ++= Seq(
-  "com.pauldijou" %% "jwt-play-legacy" % "0.13.0"
+  "com.pauldijou" %% "jwt-play-legacy" % "0.14.0"
 )
 ```
 
@@ -49,7 +49,7 @@ libraryDependencies ++= Seq(
 
 ## Algorithms
 
-If you are using `String` key, please keep in mind that such keys need to be parsed. Rather than implementating a super complex parser, the one in JWT Scala is pretty simple and might not work for all use-cases (especially for ECDSA keys). In such case, consider using `SecretKey` or `PrivateKey` or `PublicKey` directly. It is way better for you. All API support all those types.
+If you are using `String` key, please keep in mind that such keys need to be parsed. Rather than implementing a super complex parser, the one in JWT Scala is pretty simple and might not work for all use-cases (especially for ECDSA keys). In such case, consider using `SecretKey` or `PrivateKey` or `PublicKey` directly. It is way better for you. All API support all those types.
 
 Check [ECDSA samples](https://pauldijou.github.io/jwt-scala/samples/jwt-ecdsa) for more infos.
 
@@ -69,7 +69,7 @@ Check [ECDSA samples](https://pauldijou.github.io/jwt-scala/samples/jwt-ecdsa) f
 
 ## <a name="which-java"></a>Which Java?
 
-Actually, all sub-projects have two flavours. One target Java 1.8+, using the new Time API and the new Base64 util. This is the default one. If you are using Java 1.6 or 1.7 (which have both reach end-of-life by the way), you will have to use the "legacy" version of the lib. It's exactly the same (in fact, 99% of the code source is shared) except it's using the old Calendar API and the Base64 util from Apache Commons Codec (introducing **one small dependency** in this particular use-case).
+Actually, all sub-projects have two flavours. One target Java 1.8+, using the new Time API and the new Base64 util. This is the default one. If you are using Java 1.6 or 1.7 (which have both reached end-of-life by the way), you will have to use the "legacy" version of the lib. It's exactly the same (in fact, 99% of the code source is shared) except it's using the old Calendar API and the Base64 util from Apache Commons Codec (introducing **one small dependency** in this particular use-case).
 
 ## Security concerns
 
