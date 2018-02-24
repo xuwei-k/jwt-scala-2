@@ -46,7 +46,7 @@ claim: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":
 scala> // Set the expiration
      | // In 10 seconds from now
      | claim = claim.expiresIn(5)
-claim: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}},Some(Me),Some(Something),Some(Set(You)),Some(1509367107),None,None,Some(42))
+claim: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}},Some(Me),Some(Something),Some(Set(You)),Some(1519491972),None,None,Some(42))
 
 scala> // At a specific timestamp (in seconds)
      | claim.expiresAt(1431520421)
@@ -54,34 +54,34 @@ res14: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":
 
 scala> // Right now! (the token is directly invalid...)
      | claim.expiresNow
-res16: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}},Some(Me),Some(Something),Some(Set(You)),Some(1509367102),None,None,Some(42))
+res16: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}},Some(Me),Some(Something),Some(Set(You)),Some(1519491967),None,None,Some(42))
 
 scala> // Set the beginning of the token (aka the "not before" attribute)
      | // 5 seconds ago
      | claim.startsIn(-5)
-res19: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}},Some(Me),Some(Something),Some(Set(You)),Some(1509367107),Some(1509367097),None,Some(42))
+res19: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}},Some(Me),Some(Something),Some(Set(You)),Some(1519491972),Some(1519491962),None,Some(42))
 
 scala> // At a specific timestamp (in seconds)
      | claim.startsAt(1431520421)
-res21: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}},Some(Me),Some(Something),Some(Set(You)),Some(1509367107),Some(1431520421),None,Some(42))
+res21: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}},Some(Me),Some(Something),Some(Set(You)),Some(1519491972),Some(1431520421),None,Some(42))
 
 scala> // Right now!
      | claim = claim.startsNow
-claim: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}},Some(Me),Some(Something),Some(Set(You)),Some(1509367107),Some(1509367102),None,Some(42))
+claim: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}},Some(Me),Some(Something),Some(Set(You)),Some(1519491972),Some(1519491967),None,Some(42))
 
 scala> // Set the date when the token was created
      | // (you should always use claim.issuedNow, but I let you do otherwise if needed)
      | // 5 seconds ago
      | claim.issuedIn(-5)
-res26: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}},Some(Me),Some(Something),Some(Set(You)),Some(1509367107),Some(1509367102),Some(1509367097),Some(42))
+res26: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}},Some(Me),Some(Something),Some(Set(You)),Some(1519491972),Some(1519491967),Some(1519491963),Some(42))
 
 scala> // At a specific timestamp (in seconds)
      | claim.issuedAt(1431520421)
-res28: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}},Some(Me),Some(Something),Some(Set(You)),Some(1509367107),Some(1509367102),Some(1431520421),Some(42))
+res28: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}},Some(Me),Some(Something),Some(Set(You)),Some(1519491972),Some(1519491967),Some(1431520421),Some(42))
 
 scala> // Right now!
      | claim = claim.issuedNow
-claim: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}},Some(Me),Some(Something),Some(Set(You)),Some(1509367107),Some(1509367102),Some(1509367102),Some(42))
+claim: pdi.jwt.JwtClaim = JwtClaim({"user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}},Some(Me),Some(Something),Some(Set(You)),Some(1519491972),Some(1519491967),Some(1519491968),Some(42))
 
 scala> // We can test if the claim is valid => testing if the current time is between "not before" and "expiration"
      | claim.isValid
@@ -93,5 +93,5 @@ res33: Boolean = true
 
 scala> // Let's stringify the final version
      | claim.toJson
-res35: String = {"iss":"Me","sub":"Something","aud":["You"],"exp":1509367107,"nbf":1509367102,"iat":1509367102,"jti":"42","user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}}
+res35: String = {"iss":"Me","sub":"Something","aud":["You"],"exp":1519491972,"nbf":1519491967,"iat":1519491968,"jti":"42","user":1,"key1":"value1","key2":true,"key3":3,"key4":[1,2],"key5":{"key5.1":"Subkey"}}
 ```
