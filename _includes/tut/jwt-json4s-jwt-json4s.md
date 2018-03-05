@@ -62,5 +62,5 @@ scala> // Or to case classes
 res10: scala.util.Try[pdi.jwt.JwtClaim] = Success(JwtClaim({"user":1},None,None,None,None,Some(1431520421),None,None))
 
 scala> JwtJson4s.decodeAll(token, key, Seq(JwtAlgorithm.HS256))
-res11: scala.util.Try[(pdi.jwt.JwtHeader, pdi.jwt.JwtClaim, String)] = Success((JwtHeader(Some(HS256),Some(JWT),None),JwtClaim({"user":1},None,None,None,None,Some(1431520421),None,None),VmfmoqRbRvna9lfpCx4lXf96eD_X_woBM0twLjBGLlQ))
+res11: scala.util.Try[(pdi.jwt.JwtHeader, pdi.jwt.JwtClaim, String)] = Success((JwtHeader(Some(HS256),Some(JWT),None,None),JwtClaim({"user":1},None,None,None,None,Some(1431520421),None,None),VmfmoqRbRvna9lfpCx4lXf96eD_X_woBM0twLjBGLlQ))
 ```
