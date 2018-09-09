@@ -13,7 +13,7 @@ scala> val claim = JwtClaim(
      |     expiration = Some(Instant.now.plusSeconds(157784760).getEpochSecond)
      |   , issuedAt = Some(Instant.now.getEpochSecond)
      | )
-claim: pdi.jwt.JwtClaim = JwtClaim({},None,None,None,Some(1690676750),None,Some(1532891990),None)
+claim: pdi.jwt.JwtClaim = JwtClaim({},None,None,None,Some(1694296309),None,Some(1536511549),None)
 
 scala> val key = "secretKey"
 key: String = secretKey
@@ -22,17 +22,17 @@ scala> val algo = JwtAlgorithm.HS256
 algo: pdi.jwt.JwtAlgorithm.HS256.type = HS256
 
 scala> val token = JwtCirce.encode(claim, key, algo)
-token: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTA2NzY3NTAsImlhdCI6MTUzMjg5MTk5MH0.TpikO0oc6zeiihelKJV3qVjkCb4Pflg-OsEYAidxySc
+token: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTQyOTYzMDksImlhdCI6MTUzNjUxMTU0OX0.ONcm3zEzHdQUhW2Y4u1kbaiIRoteyE8HeQElZKPwT9c
 
 scala> JwtCirce.decodeJson(token, key, Seq(JwtAlgorithm.HS256))
 res0: scala.util.Try[io.circe.Json] =
 Success({
-  "exp" : 1690676750,
-  "iat" : 1532891990
+  "exp" : 1694296309,
+  "iat" : 1536511549
 })
 
 scala> JwtCirce.decode(token, key, Seq(JwtAlgorithm.HS256))
-res1: scala.util.Try[pdi.jwt.JwtClaim] = Success(JwtClaim({},None,None,None,Some(1690676750),None,Some(1532891990),None))
+res1: scala.util.Try[pdi.jwt.JwtClaim] = Success(JwtClaim({},None,None,None,Some(1694296309),None,Some(1536511549),None))
 ```
 
 ### Encoding
@@ -61,7 +61,7 @@ algo: pdi.jwt.JwtAlgorithm.HS256.type = HS256
 scala> val Right(claimJson) = jawnParse(s"""{"expires":${Instant.now.getEpochSecond}}""")
 claimJson: io.circe.Json =
 {
-  "expires" : 1532891991
+  "expires" : 1536511550
 }
 
 scala> val Right(header) = jawnParse( """{"typ":"JWT","alg":"HS256"}""")
@@ -73,13 +73,13 @@ header: io.circe.Json =
 
 scala> // From just the claim to all possible attributes
      | JwtCirce.encode(claimJson)
-res3: String = eyJhbGciOiJub25lIn0.eyJleHBpcmVzIjoxNTMyODkxOTkxfQ.
+res3: String = eyJhbGciOiJub25lIn0.eyJleHBpcmVzIjoxNTM2NTExNTUwfQ.
 
 scala> JwtCirce.encode(claimJson, key, algo)
-res4: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHBpcmVzIjoxNTMyODkxOTkxfQ.wmm43AYAqXTvB7GvVT22og1rE9767f9aLCUZw7L5fvE
+res4: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHBpcmVzIjoxNTM2NTExNTUwfQ.taOZbeCIR-IEUdcF2xpD9PIQoVJc4htr8BTWBfm8Qc4
 
 scala> JwtCirce.encode(header, claimJson, key)
-res5: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHBpcmVzIjoxNTMyODkxOTkxfQ.wmm43AYAqXTvB7GvVT22og1rE9767f9aLCUZw7L5fvE
+res5: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHBpcmVzIjoxNTM2NTExNTUwfQ.taOZbeCIR-IEUdcF2xpD9PIQoVJc4htr8BTWBfm8Qc4
 ```
 
 ### Decoding
@@ -95,7 +95,7 @@ scala> val claim = JwtClaim(
      |     expiration = Some(Instant.now.plusSeconds(157784760).getEpochSecond)
      |   , issuedAt = Some(Instant.now.getEpochSecond)
      | )
-claim: pdi.jwt.JwtClaim = JwtClaim({},None,None,None,Some(1690676752),None,Some(1532891992),None)
+claim: pdi.jwt.JwtClaim = JwtClaim({},None,None,None,Some(1694296311),None,Some(1536511551),None)
 
 scala> val key = "secretKey"
 key: String = secretKey
@@ -104,14 +104,14 @@ scala> val algo = JwtAlgorithm.HS256
 algo: pdi.jwt.JwtAlgorithm.HS256.type = HS256
 
 scala> val token = JwtCirce.encode(claim, key, algo)
-token: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTA2NzY3NTIsImlhdCI6MTUzMjg5MTk5Mn0.od2ZuzdymWHOEnXC5sX_ubRj7eLp3YjdDcYal-GoRSI
+token: String = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTQyOTYzMTEsImlhdCI6MTUzNjUxMTU1MX0.UGsL7gT40ULhNZWcU2H8voO90daGZLZYBEJg3qhN6Ag
 
 scala> // You can decode to JsObject
      | JwtCirce.decodeJson(token, key, Seq(JwtAlgorithm.HS256))
 res7: scala.util.Try[io.circe.Json] =
 Success({
-  "exp" : 1690676752,
-  "iat" : 1532891992
+  "exp" : 1694296311,
+  "iat" : 1536511551
 })
 
 scala> JwtCirce.decodeJsonAll(token, key, Seq(JwtAlgorithm.HS256))
@@ -120,14 +120,14 @@ Success(({
   "typ" : "JWT",
   "alg" : "HS256"
 },{
-  "exp" : 1690676752,
-  "iat" : 1532891992
-},od2ZuzdymWHOEnXC5sX_ubRj7eLp3YjdDcYal-GoRSI))
+  "exp" : 1694296311,
+  "iat" : 1536511551
+},UGsL7gT40ULhNZWcU2H8voO90daGZLZYBEJg3qhN6Ag))
 
 scala> // Or to case classes
      | JwtCirce.decode(token, key, Seq(JwtAlgorithm.HS256))
-res10: scala.util.Try[pdi.jwt.JwtClaim] = Success(JwtClaim({},None,None,None,Some(1690676752),None,Some(1532891992),None))
+res10: scala.util.Try[pdi.jwt.JwtClaim] = Success(JwtClaim({},None,None,None,Some(1694296311),None,Some(1536511551),None))
 
 scala> JwtCirce.decodeAll(token, key, Seq(JwtAlgorithm.HS256))
-res11: scala.util.Try[(pdi.jwt.JwtHeader, pdi.jwt.JwtClaim, String)] = Success((JwtHeader(Some(HS256),Some(JWT),None,None),JwtClaim({},None,None,None,Some(1690676752),None,Some(1532891992),None),od2ZuzdymWHOEnXC5sX_ubRj7eLp3YjdDcYal-GoRSI))
+res11: scala.util.Try[(pdi.jwt.JwtHeader, pdi.jwt.JwtClaim, String)] = Success((JwtHeader(Some(HS256),Some(JWT),None,None),JwtClaim({},None,None,None,Some(1694296311),None,Some(1536511551),None),UGsL7gT40ULhNZWcU2H8voO90daGZLZYBEJg3qhN6Ag))
 ```
