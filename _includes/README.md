@@ -1,4 +1,4 @@
-# JWT Scala 0.18.0
+# JWT Scala 0.19.0
 
 Scala support for JSON Web Token ([JWT](http://tools.ietf.org/html/draft-ietf-oauth-json-web-token)). Supports Java 1.6+, Scala 2.11.x and Scala 2.12.x. Optional helpers for Play Framework, Play JSON, Json4s Native, Json4s Jackson, Circe and uPickle.
 
@@ -13,6 +13,7 @@ JWT Scala is divided in several sub-projects each targeting a specific use-case.
 |`jwt-play`|[Play framework](https://www.playframework.com/)|[JwtSession](https://pauldijou.github.io/jwt-scala/samples/jwt-play)|[API](https://pauldijou.github.io/jwt-scala/api/latest/jwt-play)|
 |`jwt-json4s-native`|[json4s](http://json4s.org/) Native implementation|[JwtJson4s](https://pauldijou.github.io/jwt-scala/samples/jwt-json4s)|[API](https://pauldijou.github.io/jwt-scala/api/latest/jwt-json4s)|
 |`jwt-json4s-jackson`|[json4s](http://json4s.org/) Jackson implementation|[JwtJson4s](https://pauldijou.github.io/jwt-scala/samples/jwt-json4s)|[API](https://pauldijou.github.io/jwt-scala/api/latest/jwt-json4s)|
+|`jwt-spray-json`|[spray-json](https://github.com/spray/spray-json) lib|[JwtSprayJson](https://pauldijou.github.io/jwt-scala/samples/jwt-spray-json)|[API](https://pauldijou.github.io/jwt-scala/api/latest/jwt-spray-json)|
 |`jwt-circe`|[circe](https://circe.github.io/circe/) lib|[JwtCirce](https://pauldijou.github.io/jwt-scala/samples/jwt-circe)|[API](https://pauldijou.github.io/jwt-scala/api/latest/jwt-circe)|
 |`jwt-upickle`|[uPickle](http://www.lihaoyi.com/upickle-pprint/upickle/) lib|[JwtUpickle](https://pauldijou.github.io/jwt-scala/samples/jwt-upickle)|[API](https://pauldijou.github.io/jwt-scala/api/latest/jwt-upickle)|
 
@@ -28,7 +29,7 @@ In the following snippet, replace `[name]` with the actual name of the project y
 
 ```scala
 libraryDependencies ++= Seq(
-  "com.pauldijou" %% "[name]" % "0.18.0"
+  "com.pauldijou" %% "[name]" % "0.19.0"
 )
 ```
 
@@ -38,7 +39,7 @@ libraryDependencies ++= Seq(
 
 ```scala
 libraryDependencies ++= Seq(
-  "com.pauldijou" %% "jwt-play-legacy" % "0.18.0"
+  "com.pauldijou" %% "jwt-play-legacy" % "0.19.0"
 )
 ```
 
