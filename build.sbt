@@ -34,9 +34,9 @@ addCommandAlias("publish-doc", "docs/makeMicrosite; docs/publishMicrosite")
 
 addCommandAlias("testAll", allProjects.map(p => p + "/test").mkString(";", ";", ""))
 
-addCommandAlias("format", "scalafmt; test:scalafmt")
+addCommandAlias("format", "all scalafmtAll scalafmtSbt")
 
-addCommandAlias("formatCheck", "scalafmtCheck; test:scalafmtCheck")
+addCommandAlias("formatCheck", "all scalafmtCheckAll scalafmtSbt")
 
 // ";+coreProject/publishSigned"
 // ";+playJsonProject/publishSigned"
@@ -227,8 +227,26 @@ lazy val jwtScala = project
   .settings(
     name := "jwt-scala"
   )
-  .aggregate(json4sNative, json4sJackson, circe.jvm, circe.js, upickle, zioJson, playFramework, argonaut)
-  .dependsOn(json4sNative, json4sJackson, circe.jvm, circe.js, upickle, zioJson, playFramework, argonaut)
+  .aggregate(
+    json4sNative,
+    json4sJackson,
+    circe.jvm,
+    circe.js,
+    upickle,
+    zioJson,
+    playFramework,
+    argonaut
+  )
+  .dependsOn(
+    json4sNative,
+    json4sJackson,
+    circe.jvm,
+    circe.js,
+    upickle,
+    zioJson,
+    playFramework,
+    argonaut
+  )
   .settings(crossScalaVersions := List())
 
 lazy val docs = project
